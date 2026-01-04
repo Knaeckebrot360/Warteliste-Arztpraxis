@@ -10,7 +10,7 @@ namespace Warteliste_Arztpraxis
 {
     class Patien
     {
-        
+       // fdsewfhdwhehdhfefebrefvf
         
             public int Nummer { get; private set; }
             public string Vorname { get; set; }

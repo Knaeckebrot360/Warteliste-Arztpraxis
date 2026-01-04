@@ -19,9 +19,9 @@ namespace Warteliste_Arztpraxis
             patienten.Add(patientneu);
         }
 
-        public void SchmerzpatientHinzufügen(int patientnummer, string vorname, string nachnahm, string sozialversicherungsnr, string behandlung)
+        public void SchmerzpatientHinzufügen(Patien patient)
         {
-            Patien patientneu = new Patien(vorname, nachnahm, sozialversicherungsnr, behandlung);
+            Patien patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
             patienten.Add(patientneu);
         }
