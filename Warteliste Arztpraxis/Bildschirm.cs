@@ -12,9 +12,9 @@ namespace Warteliste_Arztpraxis
     {
         private List<Patien> patienten = new List<Patien>();
 
-        public void PatientHinzufügen(int patientnummer, string vorname, string nachnahm, string sozialversicherungsnr, string behandlung)
+        public void PatientHinzufügen(Patien patient)
         {
-            Patien patientneu = new Patien(vorname, nachnahm, sozialversicherungsnr, behandlung);
+            Patien patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
             patienten.Add(patientneu);
         }
@@ -34,9 +34,11 @@ namespace Warteliste_Arztpraxis
                 position++;
                 Console.WriteLine($"Position {position}: {patient.Nummer}\n");
             }
-            if(patienten == null || patienten.Count == 0)
+            if( patienten.Count == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Keine Patienten vorhanden\n");
+                Console.ResetColor();
             }
         }
 

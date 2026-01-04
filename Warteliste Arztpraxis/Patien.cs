@@ -13,13 +13,13 @@ namespace Warteliste_Arztpraxis
         
         
             public int Nummer { get; private set; }
-            public string Vorname { get; }
-            public string Nachname { get; }
-            public string Sozialversicherungsnr { get; }
-            public string Behandlung { get; }
+            public string Vorname { get; set; }
+            public string Nachname { get; set; }
+            public string Sozialversicherungsnr { get; set; }
+            public string Behandlung { get; set; }
 
-            public Patien(string vorname, string nachname, string sozialversicherungsnr, string behandlung)
-            {
+            public Patien(string vorname, string nachname, string sozialversicherungsnr, string behandlung)     //Konstruktor für die Klasse Patient
+        {
                 Vorname = vorname;
                 Nachname = nachname;
                 Sozialversicherungsnr = sozialversicherungsnr;
