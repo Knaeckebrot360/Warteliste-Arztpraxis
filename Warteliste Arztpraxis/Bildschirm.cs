@@ -32,7 +32,7 @@ namespace Warteliste_Arztpraxis
             foreach (Patien patient in patienten)
             {
                 position++;
-                Console.WriteLine($"Position {position}: {patient.Nummer}\n");
+                Console.Write($"Position {position}: {patient.Nummer}\n");
             }
             if( patienten.Count == 0)
             {
@@ -74,6 +74,25 @@ namespace Warteliste_Arztpraxis
             {
                 patienten.Remove(patientZumEntfernen);
             }
+        }
+
+        public void ZeigePatientendetails(int patientnummer)
+        {
+            foreach (Patien patient in patienten)
+            {
+                if (patient.Nummer == patientnummer)
+                {
+                    Console.WriteLine($"Patientennummer: {patient.Nummer}");
+                    Console.WriteLine($"Vorname: {patient.Vorname}");
+                    Console.WriteLine($"Nachname: {patient.Nachname}");
+                    Console.WriteLine($"Sozialversicherungsnummer: {patient.Sozialversicherungsnr}");
+                    Console.WriteLine($"Behandlung: {patient.Behandlung}\n");
+                    return;
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Patient nicht gefunden\n");
+            Console.ResetColor();
         }
     }
 }
