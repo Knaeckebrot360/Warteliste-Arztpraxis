@@ -10,18 +10,18 @@ namespace Warteliste_Arztpraxis
 {
     class Bildschirm
     {
-        private List<Patien> patienten = new List<Patien>();
+        private List<Patient> patienten = new List<Patient>();
 
-        public void PatientHinzufügen(Patien patient)
+        public void PatientHinzufügen(Patient patient)
         {
-            Patien patientneu = patient;
+            Patient patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
             patienten.Add(patientneu);
         }
 
-        public void SchmerzpatientHinzufügen(Patien patient)
+        public void SchmerzpatientHinzufügen(Patient patient)
         {
-            Patien patientneu = patient;
+            Patient patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
             patienten.Add(patientneu);
         }
@@ -29,7 +29,7 @@ namespace Warteliste_Arztpraxis
         public void ZeigeWarteliste()
         {
             int position = 0;
-            foreach (Patien patient in patienten)
+            foreach (Patient patient in patienten)
             {
                 position++;
                 Console.Write($"Position {position}: {patient.Nummer}\n");
@@ -48,7 +48,7 @@ namespace Warteliste_Arztpraxis
             
             int nummer = rnd.Next(10, 100);
 
-            foreach (Patien patient in patienten)
+            foreach (Patient patient in patienten)
             {
                 if (patient.Nummer == nummer)
                 {
@@ -61,8 +61,8 @@ namespace Warteliste_Arztpraxis
 
         public void NächsterPatientEntfernen(int patientnummer)
         {
-            Patien patientZumEntfernen = null;
-            foreach (Patien patient in patienten)
+            Patient patientZumEntfernen = null;
+            foreach (Patient patient in patienten)
             {
                 if (patient.Nummer == patientnummer)
                 {
@@ -78,7 +78,7 @@ namespace Warteliste_Arztpraxis
 
         public void ZeigePatientendetails(int patientnummer)
         {
-            foreach (Patien patient in patienten)
+            foreach (Patient patient in patienten)
             {
                 if (patient.Nummer == patientnummer)
                 {
@@ -89,10 +89,14 @@ namespace Warteliste_Arztpraxis
                     Console.WriteLine($"Behandlung: {patient.Behandlung}\n");
                     return;
                 }
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Patient nicht gefunden\n");
+                Console.ResetColor();
+
             }
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Patient nicht gefunden\n");
-            Console.ResetColor();
+            
+
         }
     }
 }

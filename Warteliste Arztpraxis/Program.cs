@@ -8,17 +8,18 @@ namespace Warteliste_Arztpraxis
         {
             Bildschirm bildschirm = new Bildschirm();
 
-            int eingabe=-1;
+            int eingabe = -1;
 
-            do { 
+            do
+            {
                 Console.ResetColor();
                 Console.Clear();
                 Console.WriteLine("Zahnarztpraxis Schmerzfrei - Wartelistenprogramm");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\n\nWarteliste:");
-                Console.ResetColor();
-                bildschirm.ZeigeWarteliste();
 
+                bildschirm.ZeigeWarteliste();
+                Console.ResetColor();
                 Console.WriteLine("\n[1] Patient hinzufügen, [2] Warteliste anzeigen, [3] Zeige Patient, [4] Patient behandelt, [0] Exit");
 
                 Console.Write("\nEingabe: ");
@@ -27,7 +28,7 @@ namespace Warteliste_Arztpraxis
 
                 if (int.TryParse(eingabeStr, out eingabe) == false)     //Sicherstellungen, dass eine korrekte Zahl eingegeben wurde
                 {
-                    ZeigeFehler("Fehler: Falsche Eingabe");
+                    ZeigeFehler("Falsche Eingabe");
                     Console.ReadKey();
                     eingabe = -1;
                     continue;
@@ -35,7 +36,7 @@ namespace Warteliste_Arztpraxis
 
                 if (eingabe < 0 || eingabe > 4)
                 {
-                    ZeigeFehler("Fehler: Falsche Eingabe");
+                    ZeigeFehler("Falsche Eingabe");
                     Console.ReadKey();
                     eingabe = -1;
                     continue;
@@ -45,13 +46,20 @@ namespace Warteliste_Arztpraxis
                 switch (eingabe)
                 {
                     case 1:
-                       
+
                         Console.Write("Vorname: ");
                         string vorname = Console.ReadLine();
 
-                        while (int.TryParse(vorname, out int ausvorname))           //Namen enthalten üblicherweise keine Zahlen, leer sind sie schon gar nicht
-                        {
-                            ZeigeFehler("Falsche Eingabe (enthält Zahlen)");
+                        while (string.IsNullOrWhiteSpace(vorname) || vorname.Any(char.IsDigit))              //Namen enthalten üblicherweise keine Zahlen, leer sind sie schon gar nicht
+                        {                                                                                   //Zugegeben, von .Any erfuhr ich durch Gemini, allerdings möchte ich das dass Programm auf das meiste gefasst ist ;)
+                            if (string.IsNullOrWhiteSpace(vorname))                                         //Fehler genauer definieren, damit der Benutzer weiß was er falsch gemacht hat
+                            {
+                                ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
+                            }
+                            else
+                            {
+                                ZeigeFehler("Falsche Eingabe (enthält Zahlen)");
+                            }
                             Console.Write("Vorname: ");
                             vorname = Console.ReadLine();
                         }
@@ -59,10 +67,10 @@ namespace Warteliste_Arztpraxis
 
 
 
-                        Console.Write("Nachname: ");                                //Selbe Prinzip
+                        Console.Write("Nachname: ");                                                        //Selbe Prinzip, IsNullOrWhiteSpace(danke Copilot) und und Any(char.IsDigit) um Zahlen auszuschließen
                         string nachname = Console.ReadLine();
 
-                        while (string.IsNullOrWhiteSpace(nachname) || int.TryParse(nachname, out int ausnachname))
+                        while (string.IsNullOrWhiteSpace(nachname) || nachname.Any(char.IsDigit))           //Es wird gefragt bis das Programm eine korrekte Eingabe erhält
                         {
                             if (string.IsNullOrWhiteSpace(nachname))
                             {
@@ -77,26 +85,34 @@ namespace Warteliste_Arztpraxis
                         }
 
 
-                        Console.Write("Sozialversicherungsnummer:");                //Umgekehrtes Prinzip
+                        Console.Write("Sozialversicherungsnummer:");                                        //Umgekehrtes Prinzip
                         string svnr = Console.ReadLine();
-                        while (int.TryParse(svnr, out int aussvnr)==false)
+                        while (int.TryParse(svnr, out int aussvnr) == false)
                         {
-                            ZeigeFehler("Falsche Eingabe");
+                            if (string.IsNullOrWhiteSpace(svnr))
+                            {
+                                ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
+                            }
+                            else
+                            {
+                                ZeigeFehler("Falsche Eingabe (enthält Buchstaben oder Sonderzeichen)");
+                            }
+
                             Console.Write("Sozialversicherungsnummer: ");
                             svnr = Console.ReadLine();
                         }
 
 
-                        Console.Write("Behandlung:");                               //können vielleicht Zahlen enthalten?
+                        Console.Write("Behandlung:");                                                        //könnte womöglich Zahlen enthalten?
                         string behandlung = Console.ReadLine();
-                        while (int.TryParse(behandlung, out int behandeln))
+                        while (string.IsNullOrWhiteSpace(behandlung))
                         {
-                            ZeigeFehler("Darf nicht leer sein");
+                            ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
                             Console.Write("Behandlung: ");
                             behandlung = Console.ReadLine();
                         }
 
-                        Patien neuerPatient = new Patien(vorname, nachname, svnr, behandlung);
+                        Patient neuerPatient = new Patient(vorname, nachname, svnr, behandlung);
                         bildschirm.PatientHinzufügen(neuerPatient);
 
                         Console.Write("starke Schmerzen? (j/n): ");                 //Man wird gefragt ob man arge Schmerzen hat und somit ein Schmerzpatient ist
@@ -108,7 +124,7 @@ namespace Warteliste_Arztpraxis
                             argeSchmerzen = Console.ReadLine();
                         }
 
-                        Console.ForegroundColor = ConsoleColor.Green;           
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Patient erfolgreich hinzugefügt!\n");    //Ich finde es schön
                         Console.ResetColor();
                         Console.ReadKey();
@@ -121,22 +137,45 @@ namespace Warteliste_Arztpraxis
 
                         break;
 
-                    case 3:
+                    case 3:                                                        //Zeigt die Details eines Patienten an
                         Console.Write("Nummer des patienten: ");
                         string patientennummerD = Console.ReadLine();
-                        bildschirm.ZeigePatientendetails(int.Parse(patientennummerD));                     //Zeigt die Details eines Patienten an
+
+                        while (int.TryParse(patientennummerD, out int auspatient) == false)     //Sicherstellung, dass eine korrekte Zahl eingegeben wurde
+                        {
+                            if (string.IsNullOrWhiteSpace(patientennummerD))
+                            {
+                                ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
+
+                            }
+                            else
+                            {
+                                ZeigeFehler("Falsche Eingabe (enthält Buchstaben oder Sonderzeichen)");
+                            }
+
+                            Console.Write("Nummer des patienten: ");
+                            patientennummerD = Console.ReadLine();
+
+                        }
+
+                        bildschirm.ZeigePatientendetails(int.Parse(patientennummerD));
+                        Console.ReadKey();
                         break;
+
 
                     case 4:
 
                         break;
 
-                    case 5: break;
+                    case 5:
+                        Console.WriteLine("Auf Wiedersehen.");
+                        break;
                 }
-                   
-                
 
-            } while (eingabe !=0);
+
+
+            } while (eingabe != 0);
+        }
 
             static void ZeigeFehler(string message)
             {
@@ -147,4 +186,4 @@ namespace Warteliste_Arztpraxis
 
         }
     }
-}
+

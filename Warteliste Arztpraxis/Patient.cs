@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Warteliste_Arztpraxis
 {
-    class Patien
+    class Patient
     {
        // fdsewfhdwhehdhfefebrefvf
         
@@ -18,7 +18,7 @@ namespace Warteliste_Arztpraxis
             public string Sozialversicherungsnr { get; set; }
             public string Behandlung { get; set; }
 
-            public Patien(string vorname, string nachname, string sozialversicherungsnr, string behandlung)     //Konstruktor für die Klasse Patient
+            public Patient(string vorname, string nachname, string sozialversicherungsnr, string behandlung)     //Konstruktor für die Klasse Patient
         {
                 Vorname = vorname;
                 Nachname = nachname;
