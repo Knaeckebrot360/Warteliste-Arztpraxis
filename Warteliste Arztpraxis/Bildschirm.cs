@@ -23,7 +23,7 @@ namespace Warteliste_Arztpraxis
         {
             Patient patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
-            patienten.Insert(0,patientneu);
+            patienten.Insert(0, patientneu);
         }
 
         public void ZeigeWarteliste()
@@ -34,7 +34,7 @@ namespace Warteliste_Arztpraxis
                 position++;
                 Console.Write($"Position {position}: {patient.Nummer}\n");
             }
-            if( patienten.Count == 0)
+            if (patienten.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Keine Patienten vorhanden\n");
@@ -45,7 +45,7 @@ namespace Warteliste_Arztpraxis
         public int ErzeugeNeuePatientennummer()                         //Erzeugt eine zufällige zweistellige Zahl für einen neuen Patienten
         {
             Random rnd = new Random();
-            
+
             int nummer = rnd.Next(10, 100);
 
             foreach (Patient patient in patienten)
@@ -53,7 +53,7 @@ namespace Warteliste_Arztpraxis
                 if (patient.Nummer == nummer)
                 {
                     nummer = rnd.Next(10, 100);
-                    
+
                 }
             }
 
@@ -62,22 +62,46 @@ namespace Warteliste_Arztpraxis
 
         public void NächsterPatientEntfernen()
         {
-            if (patienten != null)
+            //if (patienten.Count>0)
+            //{
+            //    patienten.RemoveAt(0);
+
+            //    Console.ForegroundColor = ConsoleColor.Green;
+            //    Console.WriteLine($"Patient aus Warteliste entfernt\n");
+            //    Console.ResetColor();
+            //}
+            //else
+            //{
+            //    Console.ForegroundColor = ConsoleColor.Red;
+            //    Console.WriteLine("Keine Patienten vorhanden\n");
+            //    Console.ResetColor();
+
+            //}
+
+            try                                                                                         //Die ganze Geschichte mit Try-Catch und Exceptions
             {
                 patienten.RemoveAt(0);
 
+
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Patient aus Warteliste entfernt\n");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Keine Patienten vorhanden\n");
+                Console.WriteLine($"Patient aus Warteliste entfernt\n");
                 Console.ResetColor();
 
             }
-            
+            catch (ArgumentOutOfRangeException)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Keine Patienten vorhanden (Liste ist leer)\n");
+                Console.ResetColor();
+            }
+            catch (Exception ex)                                                                            // Fängt alle retslichen unvorhergesehenen Fehler ab
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}\n");
+                Console.ResetColor();
+            }
+
         }
 
         public void ZeigePatientendetails(int patientnummer)
@@ -94,7 +118,7 @@ namespace Warteliste_Arztpraxis
                     return;
                 }
 
-              
+
 
             }
             Console.ForegroundColor = ConsoleColor.Red;

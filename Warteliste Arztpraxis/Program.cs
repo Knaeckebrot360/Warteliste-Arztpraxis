@@ -85,13 +85,17 @@ namespace Warteliste_Arztpraxis
                         }
 
 
-                        Console.Write("Sozialversicherungsnummer:");                                        //Umgekehrtes Prinzip
+                        Console.Write("Sozialversicherungsnummer: ");                                        //Umgekehrtes Prinzip
                         string svnr = Console.ReadLine();
-                        while (int.TryParse(svnr, out int aussvnr) == false)
+                        while (long.TryParse(svnr, out long aussvnr) == false || svnr.Length != 10)
                         {
                             if (string.IsNullOrWhiteSpace(svnr))
                             {
                                 ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
+                            }
+                            else if (svnr.Length != 10 && long.TryParse(svnr, out long ausvnr) == true)
+                            {
+                                ZeigeFehler("Falsche Eingabe (muss genau 10 Ziffern enthalten)");
                             }
                             else
                             {
@@ -103,7 +107,7 @@ namespace Warteliste_Arztpraxis
                         }
 
 
-                        Console.Write("Behandlung:");                                                        //könnte womöglich Zahlen enthalten?
+                        Console.Write("Behandlung: ");                                                        //könnte womöglich Zahlen enthalten?
                         string behandlung = Console.ReadLine();
                         while (string.IsNullOrWhiteSpace(behandlung))
                         {
@@ -113,7 +117,7 @@ namespace Warteliste_Arztpraxis
                         }
 
                         Patient neuerPatient = new Patient(vorname, nachname, svnr, behandlung);
-                        
+
 
                         Console.Write("starke Schmerzen? (j/n): ");                 //Man wird gefragt ob man arge Schmerzen hat und somit ein Schmerzpatient ist
                         string argeSchmerzen = Console.ReadLine();
@@ -174,7 +178,9 @@ namespace Warteliste_Arztpraxis
 
 
                     case 4:
+
                         bildschirm.NächsterPatientEntfernen();
+                        Console.ReadKey();
                         break;
 
 
@@ -190,13 +196,13 @@ namespace Warteliste_Arztpraxis
             ;
         }
 
-            static void ZeigeFehler(string message)                     //Formatvorlage für Fehlermeldungen mit integrierter Ausgabe
+        static void ZeigeFehler(string message)                     //Formatvorlage für Fehlermeldungen mit integrierter Ausgabe
         {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(message);
-                Console.ResetColor();
-            }
-
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
+
     }
+}
 
