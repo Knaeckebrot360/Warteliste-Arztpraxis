@@ -51,7 +51,7 @@ namespace Warteliste_Arztpraxis
                         string vorname = Console.ReadLine();
 
                         while (string.IsNullOrWhiteSpace(vorname) || vorname.Any(char.IsDigit))              //Namen enthalten üblicherweise keine Zahlen, leer sind sie schon gar nicht
-                        {                                                                                   //Zugegeben, von .Any erfuhr ich durch Gemini, allerdings möchte ich das dass Programm auf das meiste gefasst ist ;)
+                        {                                                                                   
                             if (string.IsNullOrWhiteSpace(vorname))                                         //Fehler genauer definieren, damit der Benutzer weiß was er falsch gemacht hat
                             {
                                 ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
@@ -67,7 +67,7 @@ namespace Warteliste_Arztpraxis
 
 
 
-                        Console.Write("Nachname: ");                                                        //Selbe Prinzip, IsNullOrWhiteSpace(danke Copilot) und und Any(char.IsDigit) um Zahlen auszuschließen
+                        Console.Write("Nachname: ");                                                        //Selbe Prinzip, IsNullOrWhiteSpace und und Any(char.IsDigit) um Zahlen auszuschließen
                         string nachname = Console.ReadLine();
 
                         while (string.IsNullOrWhiteSpace(nachname) || nachname.Any(char.IsDigit))           //Es wird gefragt bis das Programm eine korrekte Eingabe erhält
@@ -132,7 +132,7 @@ namespace Warteliste_Arztpraxis
 
                     case 2:
 
-                        bildschirm.ZeigeWarteliste();                               //nochmal die Warteliste wer sie oben nicht finden kann ¯\(ツ)/¯ 
+                        bildschirm.ZeigeWarteliste();                               
                         Console.ReadKey();
 
                         break;
