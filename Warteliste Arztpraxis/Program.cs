@@ -113,7 +113,7 @@ namespace Warteliste_Arztpraxis
                         }
 
                         Patient neuerPatient = new Patient(vorname, nachname, svnr, behandlung);
-                        bildschirm.PatientHinzufügen(neuerPatient);
+                        
 
                         Console.Write("starke Schmerzen? (j/n): ");                 //Man wird gefragt ob man arge Schmerzen hat und somit ein Schmerzpatient ist
                         string argeSchmerzen = Console.ReadLine();
@@ -122,6 +122,15 @@ namespace Warteliste_Arztpraxis
                             ZeigeFehler("Falsche Eingabe (nur j/n)");
                             Console.Write("starke Schmerzen? (j/n): ");
                             argeSchmerzen = Console.ReadLine();
+                        }
+
+                        if (argeSchmerzen == "j")
+                        {
+                            bildschirm.SchmerzpatientHinzufügen(neuerPatient);      //Wenn ja, wird die Methode für Schmerzpatienten aufgerufen
+                        }
+                        else
+                        {
+                            bildschirm.PatientHinzufügen(neuerPatient);              //Wenn nein, wird die normale Methode aufgerufen
                         }
 
                         Console.ForegroundColor = ConsoleColor.Green;

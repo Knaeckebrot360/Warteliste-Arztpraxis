@@ -19,11 +19,11 @@ namespace Warteliste_Arztpraxis
             patienten.Add(patientneu);
         }
 
-        public void SchmerzpatientHinzufügen(Patient patient)
+        public void SchmerzpatientHinzufügen(Patient patient)                   //Patien rückt automatisch an 1. Stelle
         {
             Patient patientneu = patient;
             patientneu.NummerZuweisen(ErzeugeNeuePatientennummer());
-            patienten.Add(patientneu);
+            patienten.Insert(0,patientneu);
         }
 
         public void ZeigeWarteliste()
@@ -42,7 +42,7 @@ namespace Warteliste_Arztpraxis
             }
         }
 
-        public int ErzeugeNeuePatientennummer()
+        public int ErzeugeNeuePatientennummer()                         //Erzeugt eine zufällige zweistellige Zahl für einen neuen Patienten
         {
             Random rnd = new Random();
             
