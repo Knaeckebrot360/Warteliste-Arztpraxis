@@ -61,19 +61,21 @@ namespace Warteliste_Arztpraxis
 
         public void NächsterPatientEntfernen(int patientnummer)
         {
-            Patient patientZumEntfernen = null;
-            foreach (Patient patient in patienten)
+            if (patienten != null)
             {
-                if (patient.Nummer == patientnummer)
-                {
-                    patientZumEntfernen = patient;
-                    break;
-                }
+                patienten.RemoveAt(0);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Patient aus Warteliste entfernt\n");
+                Console.ResetColor();
             }
-            if (patientZumEntfernen != null)
+            else
             {
-                patienten.Remove(patientZumEntfernen);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Keine Patienten vorhanden\n");
+                Console.ResetColor();
             }
+            
         }
 
         public void ZeigePatientendetails(int patientnummer)
