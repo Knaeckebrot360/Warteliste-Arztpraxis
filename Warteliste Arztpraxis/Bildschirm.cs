@@ -53,13 +53,14 @@ namespace Warteliste_Arztpraxis
                 if (patient.Nummer == nummer)
                 {
                     nummer = rnd.Next(10, 100);
+                    
                 }
             }
 
             return nummer;
         }
 
-        public void NächsterPatientEntfernen(int patientnummer)
+        public void NächsterPatientEntfernen()
         {
             if (patienten != null)
             {
@@ -74,6 +75,7 @@ namespace Warteliste_Arztpraxis
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Keine Patienten vorhanden\n");
                 Console.ResetColor();
+
             }
             
         }
@@ -84,7 +86,7 @@ namespace Warteliste_Arztpraxis
             {
                 if (patient.Nummer == patientnummer)
                 {
-                    Console.WriteLine($"Patientennummer: {patient.Nummer}");
+                    Console.WriteLine($"\nPatientennummer: {patient.Nummer}");
                     Console.WriteLine($"Vorname: {patient.Vorname}");
                     Console.WriteLine($"Nachname: {patient.Nachname}");
                     Console.WriteLine($"Sozialversicherungsnummer: {patient.Sozialversicherungsnr}");
@@ -92,12 +94,12 @@ namespace Warteliste_Arztpraxis
                     return;
                 }
 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Patient nicht gefunden\n");
-                Console.ResetColor();
+              
 
             }
-            
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Patient nicht gefunden\n");
+            Console.ResetColor();
 
         }
     }

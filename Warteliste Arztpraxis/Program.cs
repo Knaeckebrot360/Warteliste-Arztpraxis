@@ -51,7 +51,7 @@ namespace Warteliste_Arztpraxis
                         string vorname = Console.ReadLine();
 
                         while (string.IsNullOrWhiteSpace(vorname) || vorname.Any(char.IsDigit))              //Namen enthalten üblicherweise keine Zahlen, leer sind sie schon gar nicht
-                        {                                                                                   
+                        {
                             if (string.IsNullOrWhiteSpace(vorname))                                         //Fehler genauer definieren, damit der Benutzer weiß was er falsch gemacht hat
                             {
                                 ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
@@ -132,18 +132,19 @@ namespace Warteliste_Arztpraxis
 
                     case 2:
 
-                        bildschirm.ZeigeWarteliste();                               
+                        bildschirm.ZeigeWarteliste();
                         Console.ReadKey();
 
                         break;
 
                     case 3:                                                        //Zeigt die Details eines Patienten an
-                        Console.Write("Nummer des patienten: ");
-                        string patientennummerD = Console.ReadLine();
 
-                        while (int.TryParse(patientennummerD, out int auspatient) == false)     //Sicherstellung, dass eine korrekte Zahl eingegeben wurde
+                        Console.Write("Nummer des patienten: ");
+                        string patientennummer = Console.ReadLine();
+
+                        while (int.TryParse(patientennummer, out int auspatient) == false)     //Sicherstellung, dass eine korrekte Zahl eingegeben wurde
                         {
-                            if (string.IsNullOrWhiteSpace(patientennummerD))
+                            if (string.IsNullOrWhiteSpace(patientennummer))
                             {
                                 ZeigeFehler("Falsche Eingabe (darf nicht leer sein)");
 
@@ -154,31 +155,34 @@ namespace Warteliste_Arztpraxis
                             }
 
                             Console.Write("Nummer des patienten: ");
-                            patientennummerD = Console.ReadLine();
+                            patientennummer = Console.ReadLine();
 
                         }
 
-                        bildschirm.ZeigePatientendetails(int.Parse(patientennummerD));
+                        bildschirm.ZeigePatientendetails(int.Parse(patientennummer));
                         Console.ReadKey();
                         break;
 
 
                     case 4:
-
+                        bildschirm.NächsterPatientEntfernen();
                         break;
 
-                    case 5:
-                        Console.WriteLine("Auf Wiedersehen.");
-                        break;
+
                 }
 
 
 
             } while (eingabe != 0);
+            {
+                Console.WriteLine("Auf Wiedersehen.");                                  //Abschiedsnachricht
+                System.Threading.Thread.Sleep(1447);                                    //nach ~1,5 Sekunden wird das Programm geschlossen
+            }
+            ;
         }
 
-            static void ZeigeFehler(string message)
-            {
+            static void ZeigeFehler(string message)                     //Formatvorlage für Fehlermeldungen mit integrierter Ausgabe
+        {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(message);
                 Console.ResetColor();
